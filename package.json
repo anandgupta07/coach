@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "seed": "tsx prisma/seed.ts",
     "generate:icons": "node scripts/generate-pwa-icons.js",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate || echo 'Prisma generate failed, will retry during build'"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

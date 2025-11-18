@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Award, BookOpen, Users, Target, TrendingUp, Youtube, Dumbbell, GraduationCap, Heart, Sparkles } from 'lucide-react';
+import { Award, BookOpen, Users, Target, TrendingUp, Youtube, Dumbbell, GraduationCap, Heart, Sparkles, Quote, ArrowRight } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -308,31 +308,58 @@ export default function AboutPage() {
             </p>
           </motion.div>
 
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            {qualifications.map((qual, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                whileHover={{ scale: 1.03, y: -5 }}
-                className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-brand-gold/50 transition-all duration-300 group"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-brand-blue to-brand-gold rounded-xl flex items-center justify-center flex-shrink-0 group-hover:shadow-lg group-hover:shadow-brand-gold/50 transition-all">
-                    <Award className="w-6 h-6 text-white" />
+          {/* Image and Qualifications Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            {/* Professional Image */}
+            <motion.div
+              {...fadeInUp}
+              className="relative overflow-hidden rounded-3xl group h-[400px] lg:h-auto"
+            >
+              <div className="absolute inset-0">
+                <img
+                  src="/CH7.jpeg"
+                  alt="Coach Himanshu - Professional Qualifications"
+                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/60 to-transparent opacity-90 group-hover:opacity-75 transition-opacity duration-300"></div>
+              </div>
+              <div className="relative z-10 h-full flex flex-col justify-end p-8">
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                  6+ Professional Certifications
+                </h3>
+                <p className="text-gray-300 text-lg">
+                  Continuously evolving through education
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Qualifications List */}
+            <motion.div
+              variants={staggerContainer}
+              initial="initial"
+              whileInView="whileInView"
+              viewport={{ once: true }}
+              className="grid grid-cols-1 gap-4"
+            >
+              {qualifications.map((qual, index) => (
+                <motion.div
+                  key={index}
+                  variants={fadeInUp}
+                  whileHover={{ scale: 1.03, y: -5 }}
+                  className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-brand-gold/50 transition-all duration-300 group"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-brand-blue to-brand-gold rounded-xl flex items-center justify-center flex-shrink-0 group-hover:shadow-lg group-hover:shadow-brand-gold/50 transition-all">
+                      <Award className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-white font-semibold text-lg leading-snug">{qual}</h3>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-white font-semibold text-lg leading-snug">{qual}</h3>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
 
           <motion.div
             {...fadeInUp}
@@ -423,25 +450,53 @@ export default function AboutPage() {
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-red-500 rounded-full blur-3xl opacity-20 animate-pulse delay-1000"></div>
 
             <div className="relative z-10 p-8 md:p-12">
-              <div className="flex flex-col md:flex-row items-center gap-8">
-                {/* YouTube Icon */}
+              {/* Header with Icon */}
+              <div className="flex items-center justify-center md:justify-start gap-4 mb-6">
                 <motion.div
                   initial={{ scale: 0.9, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
-                  className="flex-shrink-0"
                 >
-                  <div className="w-24 h-24 bg-gradient-to-br from-red-600 to-red-700 rounded-2xl flex items-center justify-center shadow-lg shadow-red-600/50">
-                    <Youtube className="w-12 h-12 text-white" />
+                  <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-red-600 to-red-700 rounded-2xl flex items-center justify-center shadow-lg shadow-red-600/50">
+                    <Youtube className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                  </div>
+                </motion.div>
+                <h2 className="text-2xl md:text-4xl font-bold text-white">
+                  Free Fitness Knowledge on YouTube
+                </h2>
+              </div>
+
+              {/* Two Column Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                {/* Left: Video Embed */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="relative rounded-2xl overflow-hidden shadow-2xl shadow-red-600/20 border border-red-600/30"
+                >
+                  <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full"
+                      src="https://www.youtube.com/embed/MWhlDIAtQMc?si=cnLQfVXwMRJvN9X9"
+                      title="Coach Himanshu YouTube Video"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    ></iframe>
                   </div>
                 </motion.div>
 
-                {/* Content */}
-                <div className="flex-1 text-center md:text-left">
-                  <h2 className="text-2xl md:text-4xl font-bold text-white mb-3">
-                    Free Fitness Knowledge on YouTube
-                  </h2>
+                {/* Right: Content */}
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  className="text-center lg:text-left"
+                >
                   <p className="text-gray-300 text-lg leading-relaxed mb-4">
                     Subscribe to <span className="text-red-400 font-semibold">Coach Himanshu Kataria</span> on YouTube for free, evidence-based fitness and nutrition content. Learn the fundamentals of exercise science and start your journey today!
                   </p>
@@ -449,7 +504,7 @@ export default function AboutPage() {
                     Want personalized training and real transformation? Check out our subscription plans below.
                   </p>
 
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                     <motion.a
                       href="https://www.youtube.com/@CoachHimanshuKataria"
                       target="_blank"
@@ -471,7 +526,7 @@ export default function AboutPage() {
                       View Subscription Plans
                     </motion.a>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
           </motion.div>

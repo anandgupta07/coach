@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   ArrowRight,
@@ -12,6 +12,10 @@ import {
   Flame,
   ShoppingBag,
   Sparkles,
+  Star,
+  Quote,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -288,18 +292,304 @@ export default function Home() {
       icon: Award,
       title: 'Certified Expertise',
       description: 'NASM Certified with 6+ professional diplomas in fitness science, nutrition, and specialized training',
+      image: '/CH11.jpeg',
     },
     {
       icon: Target,
       title: 'Science-Backed Approach',
       description: 'Evidence-based training methods focused on sustainable results, not shortcuts',
+      image: '/CH2.jpeg',
     },
     {
       icon: Users,
       title: 'Proven Track Record',
       description: 'Former fitness educator and lecturer with hundreds of successful client transformations',
+      image: '/CH4.jpeg',
     },
   ];
+
+  const testimonials = [
+    // Delhi clients (15)
+    {
+      name: 'Rahul Sharma',
+      location: 'Dwarka, Delhi',
+      rating: 5,
+      review: 'Coach Himanshu transformed my life! Lost 18kg in 5 months with his personalized diet and workout plans. His 24/7 WhatsApp support kept me motivated throughout. Best investment in my health!',
+      transformation: 'Lost 18kg in 5 months',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Priya Verma',
+      location: 'Rohini, Delhi',
+      rating: 5,
+      review: 'As a working woman, I struggled to find time for fitness. Coach Himanshu designed home workouts that fit my schedule perfectly. Down from 72kg to 58kg in 6 months! His nutrition guidance is top-notch.',
+      transformation: 'Lost 14kg in 6 months',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Amit Kumar',
+      location: 'Janakpuri, Delhi',
+      rating: 5,
+      review: 'The NASM certification really shows in his approach. Scientific, evidence-based training with no shortcuts. Gained 8kg lean muscle and my strength has doubled. Highly recommend!',
+      transformation: 'Gained 8kg muscle',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Sneha Gupta',
+      location: 'Pitampura, Delhi',
+      rating: 5,
+      review: 'After my pregnancy, I thought I\'d never get back in shape. Coach Himanshu\'s special population training expertise helped me safely lose 22kg. He\'s patient, knowledgeable, and genuinely cares!',
+      transformation: 'Lost 22kg postpartum',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Vikram Singh',
+      location: 'Saket, Delhi',
+      rating: 5,
+      review: 'Been training with Coach Himanshu for over a year. His meal plans are flexible and sustainable - no crash diets! From 95kg to 78kg and maintaining it easily. Worth every rupee!',
+      transformation: 'Lost 17kg and maintaining',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Anjali Kapoor',
+      location: 'Laxmi Nagar, Delhi',
+      rating: 5,
+      review: 'The affordable pricing makes professional coaching accessible. Got competition-ready for my first bodybuilding show under his guidance. His expertise in nutrition and training is unmatched!',
+      transformation: 'Competition ready physique',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Rajesh Mehra',
+      location: 'Vasant Kunj, Delhi',
+      rating: 5,
+      review: 'At 45, I thought I was too old to build muscle. Coach Himanshu proved me wrong! His customized senior-friendly program helped me gain strength and lose fat simultaneously. Feel 10 years younger!',
+      transformation: 'Recomposition at 45',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Neha Malhotra',
+      location: 'Connaught Place, Delhi',
+      rating: 5,
+      review: 'His TRX training expertise is amazing! The home workout variations kept things interesting. Lost 12kg and gained so much energy. The video library is super helpful for proper form.',
+      transformation: 'Lost 12kg, gained energy',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Karan Bhardwaj',
+      location: 'Greater Kailash, Delhi',
+      rating: 5,
+      review: 'Tried multiple coaches before, but Coach Himanshu\'s science-backed approach is different. No bro-science, just facts. Went from 25% to 12% body fat in 8 months. Incredible knowledge!',
+      transformation: '13% body fat reduction',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Divya Sharma',
+      location: 'Mayur Vihar, Delhi',
+      rating: 5,
+      review: 'The monthly consultations are so valuable! He adjusts my plan based on progress. Lost 15kg and my PCOS symptoms improved significantly. Thank you Coach for changing my life!',
+      transformation: 'Lost 15kg, improved PCOS',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Siddharth Jain',
+      location: 'Punjabi Bagh, Delhi',
+      rating: 5,
+      review: 'Bulking phase done right! Gained 10kg with minimal fat gain under Coach Himanshu\'s guidance. His meal timing and macro calculations are spot on. True professional!',
+      transformation: 'Clean bulk 10kg',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Ritu Agarwal',
+      location: 'Karol Bagh, Delhi',
+      rating: 5,
+      review: 'As a vegetarian, I struggled with protein intake. Coach Himanshu created amazing veg meal plans. Lost 20kg in 7 months while maintaining muscle. His knowledge of sports nutrition is exceptional!',
+      transformation: 'Lost 20kg on veg diet',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Arjun Reddy',
+      location: 'Nehru Place, Delhi',
+      rating: 5,
+      review: 'The 24/7 support is a game-changer! Whenever I had doubts, Coach responded quickly. His motivation kept me going during plateaus. From skinny to strong in 10 months!',
+      transformation: 'Gained 12kg muscle',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Pooja Nair',
+      location: 'South Extension, Delhi',
+      rating: 5,
+      review: 'Wedding transformation done! Lost 18kg in 4 months with Coach Himanshu. The customized plans fit my hectic schedule. Everyone was shocked at my wedding. Forever grateful!',
+      transformation: 'Wedding transformation 18kg',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Manish Tiwari',
+      location: 'Paschim Vihar, Delhi',
+      rating: 5,
+      review: 'Coach Himanshu\'s approach to lifestyle coaching is holistic. Not just workouts and diet, but sleep, stress management too. Down 25kg and my diabetes is under control. Life-changing!',
+      transformation: 'Lost 25kg, controlled diabetes',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+
+    // Other Indian states (5)
+    {
+      name: 'Rohan Deshmukh',
+      location: 'Pune, Maharashtra',
+      rating: 5,
+      review: 'Online coaching done right! Despite being in different cities, Coach Himanshu\'s guidance felt personal. Video calls and constant support made all the difference. Lost 16kg in 5 months!',
+      transformation: 'Lost 16kg remotely',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Kavita Patel',
+      location: 'Ahmedabad, Gujarat',
+      rating: 5,
+      review: 'Being a Gujarati foodie, I thought I could never lose weight. Coach Himanshu incorporated my favorite foods into the plan. Lost 14kg without feeling deprived. Amazing!',
+      transformation: 'Lost 14kg sustainably',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Aditya Menon',
+      location: 'Bangalore, Karnataka',
+      rating: 5,
+      review: 'Tech professional with erratic hours - Coach Himanshu understood my challenges. Flexible meal timing and efficient workouts. Gained serious muscle and energy. Highly recommend for IT folks!',
+      transformation: 'Gained 9kg lean muscle',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Shreya Mukherjee',
+      location: 'Kolkata, West Bengal',
+      rating: 5,
+      review: 'After thyroid diagnosis, weight loss seemed impossible. Coach Himanshu\'s expertise in special population training helped me lose 13kg safely. His patience and knowledge are remarkable!',
+      transformation: 'Lost 13kg with thyroid',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Vishal Reddy',
+      location: 'Hyderabad, Telangana',
+      rating: 5,
+      review: 'From dad bod to fit dad! Coach Himanshu motivated me to prioritize health. Lost 20kg in 8 months. My kids now see a healthy role model. Best decision ever!',
+      transformation: 'Lost 20kg dad transformation',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+
+    // International clients (2)
+    {
+      name: 'David Thompson',
+      location: 'London, United Kingdom',
+      rating: 5,
+      review: 'Found Coach Himanshu through Instagram. Despite the time difference, his support has been incredible. The scientific approach and affordability compared to UK coaches is amazing. Down 15kg!',
+      transformation: 'Lost 15kg internationally',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+    {
+      name: 'Sarah Martinez',
+      location: 'Dubai, UAE',
+      rating: 5,
+      review: 'Expat life made fitness difficult. Coach Himanshu\'s online coaching is perfect! Customized plans that work with Dubai\'s lifestyle. Professional, knowledgeable, and results-driven. Highly recommend!',
+      transformation: 'Lost 11kg in Dubai',
+      profilePhoto: undefined,
+      beforePhoto: undefined,
+      afterPhoto: undefined,
+    },
+  ];
+
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [allTestimonials, setAllTestimonials] = useState(testimonials);
+
+  // Fetch approved feedbacks from database and merge with hardcoded testimonials
+  useEffect(() => {
+    const fetchFeedbacks = async () => {
+      try {
+        const response = await fetch('/api/feedback');
+        const data = await response.json();
+
+        if (data.success && data.feedbacks.length > 0) {
+          // Transform database feedbacks to match testimonial format
+          const dbFeedbacks = data.feedbacks.map((feedback: any) => ({
+            name: feedback.name,
+            location: feedback.location,
+            rating: feedback.rating,
+            review: feedback.review,
+            transformation: feedback.transformation || '',
+            profilePhoto: feedback.profilePhoto,
+            beforePhoto: feedback.beforePhoto,
+            afterPhoto: feedback.afterPhoto,
+          }));
+
+          // Merge database feedbacks first (latest first) then hardcoded testimonials
+          setAllTestimonials([...dbFeedbacks, ...testimonials]);
+        }
+      } catch (error) {
+        console.error('Failed to fetch feedbacks:', error);
+        // Keep using hardcoded testimonials if fetch fails
+      }
+    };
+
+    fetchFeedbacks();
+  }, []);
+
+  const TESTIMONIALS_PER_PAGE = 3;
+  const totalPages = Math.ceil(allTestimonials.length / TESTIMONIALS_PER_PAGE);
+
+  const nextTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev + TESTIMONIALS_PER_PAGE) % allTestimonials.length);
+  };
+
+  const prevTestimonial = () => {
+    setCurrentTestimonial((prev) => {
+      const newIndex = prev - TESTIMONIALS_PER_PAGE;
+      return newIndex < 0 ? Math.floor((allTestimonials.length - 1) / TESTIMONIALS_PER_PAGE) * TESTIMONIALS_PER_PAGE : newIndex;
+    });
+  };
+
+  const getCurrentPageTestimonials = () => {
+    return allTestimonials.slice(currentTestimonial, currentTestimonial + TESTIMONIALS_PER_PAGE);
+  };
+
+  const currentPage = Math.floor(currentTestimonial / TESTIMONIALS_PER_PAGE);
 
   return (
     <>
@@ -475,20 +765,37 @@ export default function Home() {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="p-8 bg-brand-navy-light border border-brand-navy-light/50 rounded-2xl hover:border-brand-blue/30 hover:bg-brand-navy-light/80 transition-all duration-300"
+                whileHover={{ y: -8, scale: 1.02 }}
+                className="group relative overflow-hidden bg-brand-navy-light border border-brand-navy-light/50 rounded-2xl hover:border-brand-gold/50 transition-all duration-500 cursor-pointer"
               >
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="w-14 h-14 bg-brand-blue/10 rounded-xl flex items-center justify-center mb-6"
-                >
-                  <feature.icon className="text-brand-blue" size={28} />
-                </motion.div>
-                <h3 className="text-xl font-bold text-white mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-400 leading-relaxed">
-                  {feature.description}
-                </p>
+                {/* Premium Image Background */}
+                <div className="relative h-80 overflow-hidden">
+                  <img
+                    src={feature.image}
+                    alt={`${feature.title} - Coach Himanshu Professional Fitness Expertise`}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 brightness-90 group-hover:brightness-100"
+                    loading="lazy"
+                  />
+
+                  {/* Lighter Gradient Overlay - only at bottom */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/40 to-transparent"></div>
+
+                  {/* Animated glow effect on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+
+                {/* Content Section */}
+                <div className="relative p-8 bg-gradient-to-b from-brand-navy to-brand-navy-light">
+                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-brand-gold transition-colors duration-300">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
+                    {feature.description}
+                  </p>
+
+                  {/* Decorative bottom line */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-brand-gold to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -716,6 +1023,174 @@ export default function Home() {
               </div>
             </motion.div>
           </div>
+        </motion.div>
+      </section>
+
+      {/* Client Testimonials Section */}
+      <section className="py-20 px-6 bg-brand-navy-light/50 border-y border-brand-navy-light/20" aria-label="Client testimonials">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="max-w-7xl mx-auto"
+        >
+          <motion.div variants={itemVariants} className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-gold/10 border border-brand-gold/30 rounded-full mb-4">
+              <Star className="w-4 h-4 text-brand-gold fill-brand-gold" />
+              <span className="text-brand-gold text-sm font-semibold">Client Success Stories</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+              What Our Clients Say
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              Real transformations, real results. Join <span className="text-brand-gold font-semibold">1000+ satisfied clients</span> who achieved their fitness goals with Coach Himanshu.
+            </p>
+          </motion.div>
+
+          {/* Testimonials Carousel */}
+          <div className="relative">
+            {/* Grid of 3 Testimonial Cards */}
+            <motion.div
+              key={currentPage}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.5 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {getCurrentPageTestimonials().map((testimonial, index) => (
+                <div
+                  key={currentTestimonial + index}
+                  className="bg-gradient-to-br from-brand-navy-light to-brand-navy p-6 rounded-2xl border border-brand-gold/30 shadow-xl relative overflow-hidden hover:border-brand-gold/50 transition-all duration-300 flex flex-col"
+                >
+                  {/* Decorative Quote Icon */}
+                  <div className="absolute top-4 right-4 opacity-10">
+                    <Quote size={50} className="text-brand-gold" />
+                  </div>
+
+                  {/* Rating Stars */}
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} size={16} className="text-brand-gold fill-brand-gold" />
+                    ))}
+                  </div>
+
+                  {/* Review Text */}
+                  <p className="text-sm md:text-base text-gray-300 leading-relaxed mb-4 relative z-10 flex-grow">
+                    "{testimonial.review}"
+                  </p>
+
+                  {/* Transformation Badge */}
+                  {testimonial.transformation && (
+                    <div className="inline-block px-3 py-1.5 bg-brand-gold/10 border border-brand-gold/30 rounded-full mb-4">
+                      <span className="text-brand-gold font-semibold text-xs">
+                        {testimonial.transformation}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Before/After Photos */}
+                  {(testimonial.beforePhoto || testimonial.afterPhoto) && (
+                    <div className="grid grid-cols-2 gap-2 mb-4">
+                      {testimonial.beforePhoto && (
+                        <div>
+                          <p className="text-xs text-gray-400 mb-1">Before</p>
+                          <img
+                            src={testimonial.beforePhoto}
+                            alt="Before transformation"
+                            className="w-full h-32 object-cover rounded-lg border border-brand-gold/30"
+                          />
+                        </div>
+                      )}
+                      {testimonial.afterPhoto && (
+                        <div>
+                          <p className="text-xs text-gray-400 mb-1">After</p>
+                          <img
+                            src={testimonial.afterPhoto}
+                            alt="After transformation"
+                            className="w-full h-32 object-cover rounded-lg border border-brand-gold/30"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Client Info */}
+                  <div className="flex items-center gap-3 mt-auto">
+                    {testimonial.profilePhoto ? (
+                      <img
+                        src={testimonial.profilePhoto}
+                        alt={testimonial.name}
+                        className="w-12 h-12 rounded-full object-cover border-2 border-brand-gold/50 flex-shrink-0"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 bg-gradient-to-br from-brand-blue to-brand-gold rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-bold text-lg">
+                          {testimonial.name.charAt(0)}
+                        </span>
+                      </div>
+                    )}
+                    <div>
+                      <h4 className="text-white font-bold text-sm">
+                        {testimonial.name}
+                      </h4>
+                      <p className="text-gray-400 text-xs">
+                        {testimonial.location}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* Navigation Buttons */}
+            <div className="flex justify-center gap-4 mt-8">
+              <button
+                onClick={prevTestimonial}
+                className="w-12 h-12 bg-brand-navy-light border border-brand-navy-light/50 rounded-full flex items-center justify-center hover:border-brand-gold/50 hover:bg-brand-navy-light/80 transition-all duration-300 group"
+                aria-label="Previous testimonial"
+              >
+                <ChevronLeft className="text-gray-400 group-hover:text-brand-gold transition-colors" size={24} />
+              </button>
+              <button
+                onClick={nextTestimonial}
+                className="w-12 h-12 bg-brand-navy-light border border-brand-navy-light/50 rounded-full flex items-center justify-center hover:border-brand-gold/50 hover:bg-brand-navy-light/80 transition-all duration-300 group"
+                aria-label="Next testimonial"
+              >
+                <ChevronRight className="text-gray-400 group-hover:text-brand-gold transition-colors" size={24} />
+              </button>
+            </div>
+
+            {/* Indicator Dots */}
+            <div className="flex justify-center gap-2 mt-6">
+              {Array.from({ length: totalPages }).map((_, pageIndex) => (
+                <button
+                  key={pageIndex}
+                  onClick={() => setCurrentTestimonial(pageIndex * TESTIMONIALS_PER_PAGE)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    pageIndex === currentPage
+                      ? 'w-8 bg-brand-gold'
+                      : 'w-2 bg-gray-600 hover:bg-gray-500'
+                  }`}
+                  aria-label={`Go to page ${pageIndex + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Call to Action - Share Your Story */}
+          <motion.div variants={itemVariants} className="text-center mt-16">
+            <p className="text-gray-400 mb-6 text-lg">
+              Want to share your transformation story?
+            </p>
+            <a href="/feedback">
+              <Button variant="outline" className="gap-2">
+                <Star size={18} />
+                <span>Share Your Feedback</span>
+              </Button>
+            </a>
+          </motion.div>
         </motion.div>
       </section>
 

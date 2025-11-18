@@ -18,7 +18,17 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const [name, setName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
+
+  // Load remembered email on component mount
+  useEffect(() => {
+    const rememberedEmail = localStorage.getItem('rememberedEmail');
+    if (rememberedEmail) {
+      setEmail(rememberedEmail);
+      setRememberMe(true);
+    }
+  }, []);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -65,6 +75,15 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
       console.log('Token and user saved to localStorage');
+
+      // Handle Remember Me
+      if (isLogin) {
+        if (rememberMe) {
+          localStorage.setItem('rememberedEmail', email);
+        } else {
+          localStorage.removeItem('rememberedEmail');
+        }
+      }
 
       // Check subscription status and show appropriate message
       if (!isLogin) {
@@ -224,7 +243,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.42 }}
-                      className="bg-brand-navy/50 rounded-xl p-4 border border-brand-blue/20 mb-6 focus-within:border-brand-blue/50 transition-all"
+                      className="bg-brand-navy/50 rounded-xl p-4 border border-brand-blue/20 mb-4 focus-within:border-brand-blue/50 transition-all"
                     >
                       <div className="flex items-center gap-3">
                         <Lock className="w-5 h-5 text-brand-blue" />
@@ -240,6 +259,29 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                       </div>
                     </motion.div>
 
+                    {isLogin && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.43 }}
+                        className="flex items-center gap-2 mb-6"
+                      >
+                        <input
+                          type="checkbox"
+                          id="rememberMe"
+                          checked={rememberMe}
+                          onChange={(e) => setRememberMe(e.target.checked)}
+                          className="w-4 h-4 rounded border-brand-blue/30 bg-brand-navy/50 text-brand-blue focus:ring-brand-blue focus:ring-offset-0 cursor-pointer"
+                        />
+                        <label
+                          htmlFor="rememberMe"
+                          className="text-gray-400 text-sm cursor-pointer select-none hover:text-gray-300 transition-colors"
+                        >
+                          Remember me
+                        </label>
+                      </motion.div>
+                    )}
+
                     <motion.button
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -248,23 +290,9 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                       disabled={loading}
                       whileHover={{ scale: loading ? 1 : 1.02 }}
                       whileTap={{ scale: loading ? 1 : 0.98 }}
-                      className="w-full bg-gradient-to-r from-brand-blue to-brand-blue-dark text-white font-bold py-4 rounded-xl hover:shadow-[0_0_30px_rgba(23,95,255,0.4)] transition-all duration-300 mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full bg-gradient-to-r from-brand-blue to-brand-blue-dark text-white font-bold py-4 rounded-xl hover:shadow-[0_0_30px_rgba(23,95,255,0.4)] transition-all duration-300 mb-6 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {loading ? 'LOADING...' : (isLogin ? 'SIGN IN' : 'CREATE ACCOUNT')}
-                    </motion.button>
-
-                    <motion.button
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5 }}
-                      type="button"
-                      onClick={() => {
-                        setIsLogin(!isLogin);
-                        setError('');
-                      }}
-                      className="w-full text-gray-400 hover:text-white transition-colors text-sm mb-6"
-                    >
-                      {isLogin ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
                     </motion.button>
                   </form>
 
@@ -275,11 +303,11 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                     className="text-gray-500 text-xs text-center leading-relaxed"
                   >
                     By continuing you agree to our{' '}
-                    <a href="/terms" className="text-brand-blue hover:text-brand-blue-dark underline transition-colors">
+                    <a href="/terms-of-service" className="text-brand-blue hover:text-brand-blue-dark underline transition-colors" target="_blank" rel="noopener noreferrer">
                       Terms of Service
                     </a>{' '}
                     and{' '}
-                    <a href="/privacy" className="text-brand-blue hover:text-brand-blue-dark underline transition-colors">
+                    <a href="/privacy-policy" className="text-brand-blue hover:text-brand-blue-dark underline transition-colors" target="_blank" rel="noopener noreferrer">
                       Privacy Policy
                     </a>
                   </motion.p>

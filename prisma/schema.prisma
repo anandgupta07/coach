@@ -312,3 +312,26 @@ model ContactSubmission {
   @@index([status])
   @@index([createdAt])
 }
+
+model Feedback {
+  id             Int      @id @default(autoincrement())
+  name           String
+  email          String
+  location       String   // City, State/Country
+  phone          String?
+  rating         Int      // 1-5 stars
+  review         String   @db.Text
+  transformation String?  // Brief description of their transformation
+  profilePhoto   String?  // URL to profile selfie
+  beforePhoto    String?  // URL to before transformation photo
+  afterPhoto     String?  // URL to after transformation photo
+  isApproved     Boolean  @default(false) // Coach can approve before showing on website
+  isVisible      Boolean  @default(false) // Toggle visibility on testimonials section
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([isApproved])
+  @@index([isVisible])
+  @@index([rating])
+  @@index([createdAt])
+}

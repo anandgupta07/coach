@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Mail, Phone, Instagram, Youtube, MapPin, Clock, CheckCircle, AlertCircle } from 'lucide-react';
+import AnnouncementBar from '@/components/AnnouncementBar';
+import { Mail, Phone, Instagram, Youtube, MapPin, Clock, CheckCircle, AlertCircle, Facebook, Twitter } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -61,9 +62,10 @@ export default function Contact() {
   };
   return (
     <div className="min-h-screen bg-brand-navy">
+      <AnnouncementBar />
       <Navbar />
 
-      <div className="pt-24 pb-16 px-4 md:px-6">
+      <div className="pt-32 pb-16 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -154,7 +156,22 @@ export default function Contact() {
                 <h2 className="text-2xl font-bold text-white mb-6">Follow Us</h2>
                 <div className="space-y-4">
                   <a
-                    href="https://www.instagram.com/coach.himanshu/"
+                    href="https://www.facebook.com/CouchHimanshuSquad/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 p-4 bg-brand-navy-light/50 rounded-xl hover:bg-brand-navy-light transition-all group"
+                  >
+                    <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center group-hover:bg-blue-500/20 transition-all">
+                      <Facebook className="w-6 h-6 text-blue-500" />
+                    </div>
+                    <div>
+                      <h3 className="text-white font-semibold">Facebook</h3>
+                      <p className="text-gray-400 text-sm">Coach Himanshu Squad</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://www.instagram.com/coachhimanshusquad_"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-4 p-4 bg-brand-navy-light/50 rounded-xl hover:bg-brand-navy-light transition-all group"
@@ -164,7 +181,22 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="text-white font-semibold">Instagram</h3>
-                      <p className="text-gray-400 text-sm">@coach.himanshu</p>
+                      <p className="text-gray-400 text-sm">@coachhimanshusquad_</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://x.com/coach_himanshu_"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 p-4 bg-brand-navy-light/50 rounded-xl hover:bg-brand-navy-light transition-all group"
+                  >
+                    <div className="w-12 h-12 bg-gray-500/10 rounded-xl flex items-center justify-center group-hover:bg-gray-500/20 transition-all">
+                      <Twitter className="w-6 h-6 text-gray-300" />
+                    </div>
+                    <div>
+                      <h3 className="text-white font-semibold">X (Twitter)</h3>
+                      <p className="text-gray-400 text-sm">@coach_himanshu_</p>
                     </div>
                   </a>
 

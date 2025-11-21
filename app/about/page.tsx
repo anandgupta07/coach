@@ -1,9 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Award, BookOpen, Users, Target, TrendingUp, Youtube, Dumbbell, GraduationCap, Heart, Sparkles, Quote, ArrowRight } from 'lucide-react';
+import { Award, BookOpen, Users, Target, TrendingUp, Youtube, Dumbbell, GraduationCap, Heart, Sparkles, Quote, ArrowRight, Apple, Activity, HeartPulse, Trophy } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import AnnouncementBar from '@/components/AnnouncementBar';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -67,17 +68,18 @@ const journeyMilestones = [
 ];
 
 const qualifications = [
-  'Diploma in Personal Training',
-  'Diploma in Master Training',
-  'Diploma in Sports Nutrition',
-  'Diploma in TRX Suspension Training',
-  'Diploma in Special Population Training',
-  'NASM Certified Bodybuilding Preparation Coach (USA)'
+  { title: 'Diploma in Personal Training', icon: Dumbbell },
+  { title: 'Diploma in Master Training', icon: GraduationCap },
+  { title: 'Diploma in Sports Nutrition', icon: Apple },
+  { title: 'Diploma in TRX Suspension Training', icon: Activity },
+  { title: 'Diploma in Special Population Training', icon: HeartPulse },
+  { title: 'NASM Certified Bodybuilding Preparation Coach (USA)', icon: Trophy }
 ];
 
 export default function AboutPage() {
   return (
     <>
+      <AnnouncementBar />
       <Navbar />
       <div className="min-h-screen bg-gradient-to-b from-brand-navy via-brand-navy-light to-brand-navy">
       {/* Hero Section */}
@@ -167,7 +169,7 @@ export default function AboutPage() {
 
       {/* Story Section */}
       <section className="py-12 md:py-20 relative">
-        <div className="max-w-6xl mx-auto px-4 md:px-6">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
           <motion.div {...fadeInUp} className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
               The Story
@@ -175,23 +177,54 @@ export default function AboutPage() {
             <div className="w-20 h-1 bg-gradient-to-r from-brand-blue to-brand-gold mx-auto"></div>
           </motion.div>
 
-          <motion.div
-            {...fadeInUp}
-            className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 rounded-3xl p-8 md:p-12"
-          >
-            <p className="text-gray-300 text-lg leading-relaxed mb-6">
-              My fitness journey began in <span className="text-brand-gold font-semibold">2012</span>, when I entered the world of karate. Over the years, I represented at multiple levels, winning <span className="text-brand-gold font-semibold">two international medals</span> along with several national, state, and district honors.
-            </p>
-            <p className="text-gray-300 text-lg leading-relaxed mb-6">
-              In 2015, an injury forced me to step away from karate for nearly two years. I returned in 2017, but with academics (Class 12th boards and college admissions) taking priority, I couldn't fully commit. That phase, however, taught me <span className="text-brand-blue font-semibold">resilience and balance</span> between passion and responsibility.
-            </p>
-            <p className="text-gray-300 text-lg leading-relaxed mb-6">
-              In <span className="text-brand-gold font-semibold">2018</span>, after joining college, I discovered my true calling—<span className="text-brand-blue font-semibold">strength training and the gym</span>. What started as casual workouts soon grew into a passion. By 2021, I shifted focus from just training to studying fitness science in depth.
-            </p>
-            <p className="text-gray-300 text-lg leading-relaxed">
-              Today, my journey reflects one belief: <span className="text-white font-semibold">fitness is not about shortcuts, but about knowledge, discipline, and consistency</span>. And through CoachHimanshu Platform, I want to empower as many people as possible to build healthier, stronger lives.
-            </p>
-          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            {/* Image Section */}
+            <motion.div
+              {...fadeInUp}
+              className="relative overflow-hidden rounded-3xl group order-2 lg:order-1"
+            >
+              <div className="relative h-[400px] lg:h-[600px]">
+                <img
+                  src="/CH3.jpeg"
+                  alt="Coach Himanshu - Fitness Journey"
+                  className="w-full h-full object-cover object-top transform group-hover:scale-110 transition-transform duration-700"
+                />
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/40 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300"></div>
+
+                {/* Decorative Elements */}
+                <div className="absolute bottom-6 left-6 right-6">
+                  <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4">
+                    <p className="text-white font-bold text-lg mb-1">From Karate Champion</p>
+                    <p className="text-gray-300 text-sm">To Certified Fitness Expert</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Text Section */}
+            <motion.div
+              {...fadeInUp}
+              className="order-1 lg:order-2"
+            >
+              <div className="space-y-6">
+                <p className="text-gray-300 text-lg leading-relaxed">
+                  My fitness journey began in <span className="text-brand-gold font-semibold">2012</span>, when I entered the world of karate. Over the years, I represented at multiple levels, winning <span className="text-brand-gold font-semibold">two international medals</span> along with several national, state, and district honors.
+                </p>
+                <p className="text-gray-300 text-lg leading-relaxed">
+                  In 2015, an injury forced me to step away from karate for nearly two years. I returned in 2017, but with academics (Class 12th boards and college admissions) taking priority, I couldn't fully commit. That phase, however, taught me <span className="text-brand-blue font-semibold">resilience and balance</span> between passion and responsibility.
+                </p>
+                <p className="text-gray-300 text-lg leading-relaxed">
+                  In <span className="text-brand-gold font-semibold">2018</span>, after joining college, I discovered my true calling—<span className="text-brand-blue font-semibold">strength training and the gym</span>. What started as casual workouts soon grew into a passion. By 2021, I shifted focus from just training to studying fitness science in depth.
+                </p>
+                <div className="bg-gradient-to-r from-brand-blue/10 to-brand-gold/10 border border-brand-gold/30 rounded-2xl p-6">
+                  <p className="text-white text-lg leading-relaxed font-medium">
+                    Today, my journey reflects one belief: <span className="text-brand-gold font-bold">fitness is not about shortcuts, but about knowledge, discipline, and consistency</span>. And through CoachHimanshu Platform, I want to empower as many people as possible to build healthier, stronger lives.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -341,23 +374,26 @@ export default function AboutPage() {
               viewport={{ once: true }}
               className="grid grid-cols-1 gap-4"
             >
-              {qualifications.map((qual, index) => (
-                <motion.div
-                  key={index}
-                  variants={fadeInUp}
-                  whileHover={{ scale: 1.03, y: -5 }}
-                  className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-brand-gold/50 transition-all duration-300 group"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-brand-blue to-brand-gold rounded-xl flex items-center justify-center flex-shrink-0 group-hover:shadow-lg group-hover:shadow-brand-gold/50 transition-all">
-                      <Award className="w-6 h-6 text-white" />
+              {qualifications.map((qual, index) => {
+                const QualIcon = qual.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    variants={fadeInUp}
+                    whileHover={{ scale: 1.03, y: -5 }}
+                    className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-brand-gold/50 transition-all duration-300 group"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-brand-blue to-brand-gold rounded-xl flex items-center justify-center flex-shrink-0 group-hover:shadow-lg group-hover:shadow-brand-gold/50 transition-all">
+                        <QualIcon className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-white font-semibold text-lg leading-snug">{qual.title}</h3>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-white font-semibold text-lg leading-snug">{qual}</h3>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </motion.div>
           </div>
 
@@ -380,7 +416,7 @@ export default function AboutPage() {
             className="relative overflow-hidden rounded-3xl"
           >
             {/* Gradient Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-brand-blue via-brand-navy to-brand-gold opacity-90"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-brand-navy to-gray-900 opacity-95"></div>
 
             {/* Animated Orbs */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold rounded-full blur-3xl opacity-20 animate-pulse"></div>

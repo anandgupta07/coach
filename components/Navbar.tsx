@@ -23,7 +23,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-brand-navy/80 backdrop-blur-md border-b border-brand-navy-light/20">
+      <nav className="fixed top-[24px] left-0 right-0 z-50 bg-brand-navy/80 backdrop-blur-md border-b border-brand-navy-light/20">
         <div className="max-w-7xl mx-auto px-6 py-0">
         <div className="flex justify-between items-center">
           <Link

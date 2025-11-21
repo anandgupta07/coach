@@ -305,7 +305,7 @@ export default function CoachDashboard() {
             <div className="flex flex-wrap gap-3 justify-center md:justify-end">
               <button
                 onClick={handleCreateNewClient}
-                className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all flex items-center gap-2"
+                className="bg-transparent border-2 border-blue-500 text-blue-400 px-6 py-3 rounded-xl font-semibold hover:bg-blue-500/10 transition-all flex items-center gap-2"
               >
                 <UserPlus className="w-5 h-5" />
                 Create Client
@@ -315,7 +315,7 @@ export default function CoachDashboard() {
                   setSelectedWorkout(null);
                   setIsWorkoutModalOpen(true);
                 }}
-                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-purple-600 hover:to-pink-600 transition-all flex items-center gap-2"
+                className="bg-transparent border-2 border-purple-500 text-purple-400 px-6 py-3 rounded-xl font-semibold hover:bg-purple-500/10 transition-all flex items-center gap-2"
               >
                 <Plus className="w-5 h-5" />
                 Create Workout
@@ -325,21 +325,21 @@ export default function CoachDashboard() {
                   setSelectedDiet(null);
                   setIsDietModalOpen(true);
                 }}
-                className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-green-600 hover:to-emerald-600 transition-all flex items-center gap-2"
+                className="bg-transparent border-2 border-green-500 text-green-400 px-6 py-3 rounded-xl font-semibold hover:bg-green-500/10 transition-all flex items-center gap-2"
               >
                 <Plus className="w-5 h-5" />
                 Create Diet
               </button>
               <button
                 onClick={() => setIsBlogModalOpen(true)}
-                className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-orange-600 hover:to-amber-600 transition-all flex items-center gap-2"
+                className="bg-transparent border-2 border-orange-500 text-orange-400 px-6 py-3 rounded-xl font-semibold hover:bg-orange-500/10 transition-all flex items-center gap-2"
               >
                 <FileText className="w-5 h-5" />
                 Create Blog Post
               </button>
               <button
                 onClick={() => setIsNotificationModalOpen(true)}
-                className="bg-gradient-to-r from-red-500 to-rose-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-red-600 hover:to-rose-600 transition-all flex items-center gap-2"
+                className="bg-transparent border-2 border-red-500 text-red-400 px-6 py-3 rounded-xl font-semibold hover:bg-red-500/10 transition-all flex items-center gap-2"
               >
                 <Bell className="w-5 h-5" />
                 Notify Clients

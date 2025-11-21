@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import AnnouncementBar from '@/components/AnnouncementBar';
 import { Calendar, Clock, User, ArrowRight, Loader2 } from 'lucide-react';
 
 interface BlogPost {
@@ -73,10 +74,11 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-brand-navy">
+      <AnnouncementBar />
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+      <section className="relative pt-36 pb-20 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-brand-blue/10 to-transparent pointer-events-none" />
         <div className="absolute top-20 right-10 w-96 h-96 bg-brand-blue/10 rounded-full blur-3xl" />
         <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-brand-gold/5 rounded-full blur-3xl" />

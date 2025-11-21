@@ -16,6 +16,12 @@ import {
   Quote,
   ChevronLeft,
   ChevronRight,
+  Dumbbell,
+  Apple,
+  Activity,
+  HeartPulse,
+  Trophy,
+  GraduationCap,
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -23,6 +29,7 @@ import Button from '@/components/Button';
 import PlanCard from '@/components/PlanCard';
 import CheckoutDrawer from '@/components/CheckoutDrawer';
 import LoginModal from '@/components/LoginModal';
+import AnnouncementBar from '@/components/AnnouncementBar';
 import { useCart } from '@/contexts/CartContext';
 
 const containerVariants = {
@@ -293,18 +300,21 @@ export default function Home() {
       title: 'Certified Expertise',
       description: 'NASM Certified with 6+ professional diplomas in fitness science, nutrition, and specialized training',
       image: '/CH11.jpeg',
+      imagePosition: 'object-top',
     },
     {
       icon: Target,
       title: 'Science-Backed Approach',
       description: 'Evidence-based training methods focused on sustainable results, not shortcuts',
       image: '/CH2.jpeg',
+      imagePosition: 'object-[center_20%]',
     },
     {
       icon: Users,
       title: 'Proven Track Record',
       description: 'Former fitness educator and lecturer with hundreds of successful client transformations',
       image: '/CH4.jpeg',
+      imagePosition: 'object-top',
     },
   ];
 
@@ -600,9 +610,10 @@ export default function Home() {
       />
 
       <div className="min-h-screen bg-brand-navy">
+        <AnnouncementBar />
         <Navbar />
 
-      <section className="relative pt-24 md:pt-28 pb-12 md:pb-16 px-4 md:px-6 overflow-hidden min-h-screen flex flex-col justify-center" aria-label="Hero section">
+      <section className="relative pt-32 md:pt-36 pb-12 md:pb-16 px-4 md:px-6 overflow-hidden min-h-screen flex flex-col justify-center" aria-label="Hero section">
         {/* Background Video */}
         <div className="absolute inset-0 overflow-hidden z-0">
           <video
@@ -614,10 +625,10 @@ export default function Home() {
             aria-label="Coach Himanshu fitness transformation background video"
             title="NASM Certified Fitness Coach - Transformation Journey"
           >
-            <source src="/intro.mp4" type="video/mp4" />
+            <source src="/intro2.mp4" type="video/mp4" />
           </video>
           {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-brand-navy/90" />
+          <div className="absolute inset-0 bg-brand-navy/60" />
         </div>
 
         <div className="absolute inset-0 bg-gradient-to-b from-brand-blue/5 to-transparent pointer-events-none" />
@@ -773,7 +784,7 @@ export default function Home() {
                   <img
                     src={feature.image}
                     alt={`${feature.title} - Coach Himanshu Professional Fitness Expertise`}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 brightness-90 group-hover:brightness-100"
+                    className={`w-full h-full object-cover ${feature.imagePosition} transition-transform duration-700 group-hover:scale-110 brightness-90 group-hover:brightness-100`}
                     loading="lazy"
                   />
 
@@ -812,12 +823,12 @@ export default function Home() {
           <div className="flex animate-marquee whitespace-nowrap">
             {/* First set of qualifications */}
             {[
-              { icon: Award, text: 'NASM Certified Bodybuilding Coach' },
-              { icon: Award, text: 'Diploma in Personal Training' },
-              { icon: Award, text: 'Diploma in Master Training' },
-              { icon: Award, text: 'Diploma in Sports Nutrition' },
-              { icon: Award, text: 'Diploma in TRX Suspension Training' },
-              { icon: Award, text: 'Diploma in Special Population Training' },
+              { icon: Trophy, text: 'NASM Certified Bodybuilding Coach' },
+              { icon: Dumbbell, text: 'Diploma in Personal Training' },
+              { icon: GraduationCap, text: 'Diploma in Master Training' },
+              { icon: Apple, text: 'Diploma in Sports Nutrition' },
+              { icon: Activity, text: 'Diploma in TRX Suspension Training' },
+              { icon: HeartPulse, text: 'Diploma in Special Population Training' },
             ].map((item, index) => (
               <div
                 key={index}
@@ -831,12 +842,12 @@ export default function Home() {
             ))}
             {/* Duplicate set for seamless loop */}
             {[
-              { icon: Award, text: 'NASM Certified Bodybuilding Coach' },
-              { icon: Award, text: 'Diploma in Personal Training' },
-              { icon: Award, text: 'Diploma in Master Training' },
-              { icon: Award, text: 'Diploma in Sports Nutrition' },
-              { icon: Award, text: 'Diploma in TRX Suspension Training' },
-              { icon: Award, text: 'Diploma in Special Population Training' },
+              { icon: Trophy, text: 'NASM Certified Bodybuilding Coach' },
+              { icon: Dumbbell, text: 'Diploma in Personal Training' },
+              { icon: GraduationCap, text: 'Diploma in Master Training' },
+              { icon: Apple, text: 'Diploma in Sports Nutrition' },
+              { icon: Activity, text: 'Diploma in TRX Suspension Training' },
+              { icon: HeartPulse, text: 'Diploma in Special Population Training' },
             ].map((item, index) => (
               <div
                 key={`dup-${index}`}

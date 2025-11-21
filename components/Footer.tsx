@@ -1,6 +1,6 @@
 'use client';
 
-import { Instagram, Youtube, Mail, Phone } from 'lucide-react';
+import { Instagram, Youtube, Mail, Phone, Facebook, Twitter } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -162,13 +162,31 @@ export default function Footer() {
                 <p className="text-gray-400 text-xs mb-2 md:mb-3">Follow Us</p>
                 <div className="flex gap-3 md:gap-4">
                   <a
-                    href="https://www.instagram.com/coach.himanshu/"
+                    href="https://www.facebook.com/CouchHimanshuSquad/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-blue-500 transition-colors"
+                    aria-label="Facebook"
+                  >
+                    <Facebook size={18} />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/coachhimanshusquad_"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-400 hover:text-pink-500 transition-colors"
                     aria-label="Instagram"
                   >
                     <Instagram size={18} />
+                  </a>
+                  <a
+                    href="https://x.com/coach_himanshu_"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-gray-200 transition-colors"
+                    aria-label="X"
+                  >
+                    <Twitter size={18} />
                   </a>
                   <a
                     href="https://www.youtube.com/@CoachHimanshuKataria"

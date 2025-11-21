@@ -12,7 +12,8 @@ import {
   Crown,
   ArrowRight,
   LogOut,
-  Bell
+  Bell,
+  Key
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -21,6 +22,7 @@ import ViewWorkoutModal from '@/components/modals/ViewWorkoutModal';
 import ViewDietModal from '@/components/modals/ViewDietModal';
 import LatestBlogWidget from '@/components/LatestBlogWidget';
 import NotificationPanel from '@/components/NotificationPanel';
+import ChangePasswordModal from '@/components/modals/ChangePasswordModal';
 import { usePushNotifications } from '@/lib/usePushNotifications';
 
 export default function ClientDashboard() {
@@ -34,6 +36,7 @@ export default function ClientDashboard() {
   const [isDietModalOpen, setIsDietModalOpen] = useState(false);
   const [isNotificationPanelOpen, setIsNotificationPanelOpen] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
+  const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
 
   // Push notifications
   const { isSupported, isSubscribed, subscribe } = usePushNotifications();
@@ -180,20 +183,49 @@ export default function ClientDashboard() {
     const totalDays = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
     const totalWeeks = Math.ceil(totalDays / 7);
     const now = new Date();
-    const currentDay = Math.ceil((now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
-    const currentWeek = Math.ceil(currentDay / 7);
+    const currentDay = Math.max(1, Math.ceil((now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)));
 
-    // Generate week milestones (max 12 weeks to avoid clutter)
     const milestones = [];
-    const maxWeeksToShow = Math.min(totalWeeks, 12);
-    for (let i = 1; i <= maxWeeksToShow; i++) {
-      const weekProgress = ((i * 7) / totalDays) * 100;
-      milestones.push({
-        week: i,
-        progress: Math.min(weekProgress, 100),
-        isPassed: i <= currentWeek,
-        isCurrent: i === currentWeek,
-      });
+
+    // 3 months (~90 days) = 12 weeks
+    // 6 months (~180 days) = 6 months
+    // 12 months (~365 days) = 12 months
+    if (totalDays <= 100) {
+      // 3-month plan: show 12 weeks
+      const currentWeek = Math.ceil(currentDay / 7);
+      for (let i = 1; i <= 12; i++) {
+        milestones.push({
+          id: i,
+          label: `W${i}`,
+          progress: (i / 12) * 100,
+          isPassed: i <= currentWeek,
+          isCurrent: i === currentWeek,
+        });
+      }
+    } else if (totalDays <= 200) {
+      // 6-month plan: show 6 months
+      const currentMonth = Math.ceil(currentDay / 30);
+      for (let i = 1; i <= 6; i++) {
+        milestones.push({
+          id: i,
+          label: `M${i}`,
+          progress: (i / 6) * 100,
+          isPassed: i <= currentMonth,
+          isCurrent: i === currentMonth,
+        });
+      }
+    } else {
+      // Yearly plan: show 12 months
+      const currentMonth = Math.ceil(currentDay / 30);
+      for (let i = 1; i <= 12; i++) {
+        milestones.push({
+          id: i,
+          label: `M${i}`,
+          progress: (i / 12) * 100,
+          isPassed: i <= currentMonth,
+          isCurrent: i === currentMonth,
+        });
+      }
     }
     return milestones;
   };
@@ -243,6 +275,13 @@ export default function ClientDashboard() {
                   {notificationCount > 9 ? '9+' : notificationCount}
                 </span>
               )}
+            </button>
+            <button
+              onClick={() => setIsChangePasswordOpen(true)}
+              className="flex items-center justify-center p-2 bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 rounded-lg hover:bg-yellow-500/30 transition-all"
+              title="Change Password"
+            >
+              <Key className="w-5 h-5" />
             </button>
             <button
               onClick={handleLogout}
@@ -397,14 +436,14 @@ export default function ClientDashboard() {
                 <div className="relative -mt-7 overflow-visible">
                   {getWeekMilestones().map((milestone) => (
                     <motion.div
-                      key={milestone.week}
+                      key={milestone.id}
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{
                         type: 'spring',
                         stiffness: 260,
                         damping: 20,
-                        delay: 0.6 + milestone.week * 0.04
+                        delay: 0.6 + milestone.id * 0.04
                       }}
                       className="absolute"
                       style={{ left: `${milestone.progress}%`, transform: 'translateX(-50%)' }}
@@ -419,7 +458,7 @@ export default function ClientDashboard() {
                             : 'bg-white/5 border-white/20 text-gray-500 backdrop-blur-xl shadow-md'
                         }`}
                       >
-                        W{milestone.week}
+                        {milestone.label}
                       </div>
 
                       {/* Current Week Indicator */}
@@ -682,6 +721,12 @@ export default function ClientDashboard() {
           setIsNotificationPanelOpen(false);
           fetchNotificationCount();
         }}
+      />
+
+      {/* Change Password Modal */}
+      <ChangePasswordModal
+        isOpen={isChangePasswordOpen}
+        onClose={() => setIsChangePasswordOpen(false)}
       />
     </div>
   );

@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,257 +8,226 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  name      String?
-  phone     String?
-  image     String?
-  role      String   @default("user") // "user" or "coach"
-  assessmentCompleted Boolean @default(false) // Track if pre-assessment is completed
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  subscriptions    UserSubscription[]
-  workoutPlans     WorkoutPlan[]      @relation("ClientWorkouts")
-  dietPlans        DietPlan[]         @relation("ClientDiets")
-  createdWorkouts  WorkoutPlan[]      @relation("CoachWorkouts")
-  createdDiets     DietPlan[]         @relation("CoachDiets")
-  assessment       ClientAssessment?
-  blogPosts        BlogPost[]
+  id                  Int                @id @default(autoincrement())
+  email               String             @unique
+  password            String
+  name                String?
+  phone               String?
+  image               String?
+  role                String             @default("user")
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  assessmentCompleted Boolean            @default(false)
+  blogPosts           BlogPost[]
+  assessment          ClientAssessment?
+  dietPlans           DietPlan[]         @relation("ClientDiets")
+  createdDiets        DietPlan[]         @relation("CoachDiets")
+  subscriptions       UserSubscription[]
+  workoutPlans        WorkoutPlan[]      @relation("ClientWorkouts")
+  createdWorkouts     WorkoutPlan[]      @relation("CoachWorkouts")
 }
 
 model SubscriptionPlan {
-  id          Int      @id @default(autoincrement())
-  name        String   // "Basic", "Pro", "Premium"
-  description String?  @db.Text
-  price       Decimal  @db.Decimal(10, 2)
-  duration    Int      // Duration in days (30, 90, 365)
-  features    String?  @db.Text // JSON string of features
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
+  id            Int                @id @default(autoincrement())
+  name          String
+  description   String?            @db.Text
+  price         Decimal            @db.Decimal(10, 2)
+  duration      Int
+  features      String?            @db.Text
+  isActive      Boolean            @default(true)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
   subscriptions UserSubscription[]
 }
 
 model UserSubscription {
-  id        Int      @id @default(autoincrement())
+  id        Int              @id @default(autoincrement())
   userId    Int
   planId    Int
-  status    String   @default("active") // "active", "expired", "cancelled"
-  startDate DateTime @default(now())
+  status    String           @default("active")
+  startDate DateTime         @default(now())
   endDate   DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  user User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  plan SubscriptionPlan @relation(fields: [planId], references: [id])
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  plan      SubscriptionPlan @relation(fields: [planId], references: [id])
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([planId])
 }
 
 model WorkoutPlan {
-  id          Int      @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   title       String
-  description String?  @db.Text
+  description String?    @db.Text
   clientId    Int
   coachId     Int
-  weekNumber  Int      // Week number for tracking weekly plans
+  weekNumber  Int
   startDate   DateTime
   endDate     DateTime
-  notes       String?  @db.Text
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
-  client    User       @relation("ClientWorkouts", fields: [clientId], references: [id], onDelete: Cascade)
-  coach     User       @relation("CoachWorkouts", fields: [coachId], references: [id])
-  exercises Exercise[]
+  notes       String?    @db.Text
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  exercises   Exercise[]
+  client      User       @relation("ClientWorkouts", fields: [clientId], references: [id], onDelete: Cascade)
+  coach       User       @relation("CoachWorkouts", fields: [coachId], references: [id])
 
   @@index([clientId])
   @@index([coachId])
 }
 
 model Exercise {
-  id            Int      @id @default(autoincrement())
+  id            Int         @id @default(autoincrement())
   workoutPlanId Int
   name          String
-  description   String?  @db.Text
+  description   String?     @db.Text
   sets          Int?
-  reps          String?  // "10-12" or "15" etc
-  duration      Int?     // Duration in minutes
-  restTime      Int?     // Rest time in seconds
+  reps          String?
+  duration      Int?
+  restTime      Int?
   videoUrl      String?
-  day           String   // "Monday", "Tuesday", etc.
-  order         Int      @default(0)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  // Relations
-  workoutPlan WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
+  day           String
+  order         Int         @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  workoutPlan   WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
 
   @@index([workoutPlanId])
 }
 
 model DietPlan {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String?  @db.Text
-  clientId    Int
-  coachId     Int
-  weekNumber  Int      // Week number for tracking weekly plans
-  startDate   DateTime
-  endDate     DateTime
+  id             Int      @id @default(autoincrement())
+  title          String
+  description    String?  @db.Text
+  clientId       Int
+  coachId        Int
+  weekNumber     Int
+  startDate      DateTime
+  endDate        DateTime
   targetCalories Int?
-  notes       String?  @db.Text
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
-  client User   @relation("ClientDiets", fields: [clientId], references: [id], onDelete: Cascade)
-  coach  User   @relation("CoachDiets", fields: [coachId], references: [id])
-  meals  Meal[]
+  notes          String?  @db.Text
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  client         User     @relation("ClientDiets", fields: [clientId], references: [id], onDelete: Cascade)
+  coach          User     @relation("CoachDiets", fields: [coachId], references: [id])
+  meals          Meal[]
 
   @@index([clientId])
   @@index([coachId])
 }
 
 model Meal {
-  id          Int      @id @default(autoincrement())
-  dietPlanId  Int
-  name        String
-  description String?  @db.Text
-  mealType    String   // "Breakfast", "Lunch", "Dinner", "Snack"
-  calories    Int?
-  protein     Decimal? @db.Decimal(10, 2)
-  carbs       Decimal? @db.Decimal(10, 2)
-  fats        Decimal? @db.Decimal(10, 2)
-  ingredients String?  @db.Text
-  instructions String? @db.Text
-  day         String   // "Monday", "Tuesday", etc.
-  time        String?  // "08:00 AM"
-  order       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
-  dietPlan DietPlan @relation(fields: [dietPlanId], references: [id], onDelete: Cascade)
+  id           Int      @id @default(autoincrement())
+  dietPlanId   Int
+  name         String
+  description  String?  @db.Text
+  mealType     String
+  calories     Int?
+  protein      Decimal? @db.Decimal(10, 2)
+  carbs        Decimal? @db.Decimal(10, 2)
+  fats         Decimal? @db.Decimal(10, 2)
+  ingredients  String?  @db.Text
+  instructions String?  @db.Text
+  day          String
+  time         String?
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  dietPlan     DietPlan @relation(fields: [dietPlanId], references: [id], onDelete: Cascade)
 
   @@index([dietPlanId])
 }
 
 model PromoCode {
-  id                 Int      @id @default(autoincrement())
-  code               String   @unique // Promo code (e.g., "SAVE20", "NEWYEAR50")
-  discountType       String   // "percentage" or "fixed"
-  discountValue      Decimal  @db.Decimal(10, 2) // 20 (for 20%) or 500 (for ₹500 off)
-  maxUses            Int?     // Maximum number of times this code can be used (null = unlimited)
-  currentUses        Int      @default(0) // Current number of times used
-  minPurchaseAmount  Decimal? @db.Decimal(10, 2) // Minimum purchase amount required
-  expiryDate         DateTime? // Expiry date (null = never expires)
-  isActive           Boolean  @default(true)
-  description        String?  @db.Text // Description of the promo code
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  id                Int       @id @default(autoincrement())
+  code              String    @unique
+  discountType      String
+  discountValue     Decimal   @db.Decimal(10, 2)
+  maxUses           Int?
+  currentUses       Int       @default(0)
+  minPurchaseAmount Decimal?  @db.Decimal(10, 2)
+  expiryDate        DateTime?
+  isActive          Boolean   @default(true)
+  description       String?   @db.Text
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
   @@index([code])
 }
 
 model ClientAssessment {
-  id        Int      @id @default(autoincrement())
-  userId    Int      @unique
-
-  // Personal Information
-  dateOfBirth       DateTime?
-  height            Decimal?  @db.Decimal(5, 2) // in cm
-  weight            Decimal?  @db.Decimal(5, 2) // in kg
-  fatPercentage     Decimal?  @db.Decimal(5, 2)
-  address           String?   @db.Text
-  emergencyContact  String?
-
-  // PAR-Q Form (Yes/No questions)
-  heartCondition    Boolean   @default(false)
-  chestPainActivity Boolean   @default(false)
-  chestPainRest     Boolean   @default(false)
-  dizzinessBalance  Boolean   @default(false)
-  boneJointProblem  Boolean   @default(false)
-  pregnant          Boolean   @default(false)
-  recentSurgery     Boolean   @default(false)
-  takingMedication  Boolean   @default(false)
-  medicationDetails String?   @db.Text
-
-  // Lifestyle
-  smoking           Boolean   @default(false)
-  smokingAmount     String?
-  alcohol           Boolean   @default(false)
-  alcoholGlassesPerWeek Int?
-  sleepHours        Int?
-  jobType           String?   // "sedentary", "active", "physically-demanding"
-  jobRequiresTravel Boolean   @default(false)
-  stressLevel       Int?      // 1-10
-  familyOverweight  String?   @db.Text // JSON array of family members
-  overweightAsChild Boolean   @default(false)
-  overweightAges    String?
-
-  // Fitness History
-  bestShapePeriod   String?   @db.Text
-  exercisingConsistently Boolean @default(false)
-  currentFitnessLevel Int?    // 1-10
-
-  // Nutrition
-  mealsPerDay       Int?
-  skipMeals         Boolean   @default(false)
-  eatBreakfast      Boolean   @default(true)
-  eatLateNight      String?   // "sometimes", "often", "never"
-  energyDrops       Boolean   @default(false)
-  energyDropTime    String?
-  takingSupplements Boolean   @default(false)
-  supplementsList   String?   @db.Text
-  mealLocation      String?   // "eat-outside", "bring-food"
-  eatOutsidePerWeek Int?
-  eatingReasons     String?   @db.Text // JSON array
-  eatPastFullness   String?   // "often", "sometimes", "never"
-  highSugarFoods    String?   // "often", "sometimes", "never"
-
-  // Goals (can select multiple)
-  goalLoseFat       Boolean   @default(false)
-  goalRehabilitate  Boolean   @default(false)
-  goalSportsTraining Boolean  @default(false)
-  goalMuscleGain    Boolean   @default(false)
-  goalOther         String?   @db.Text
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                     Int       @id @default(autoincrement())
+  userId                 Int       @unique
+  dateOfBirth            DateTime?
+  height                 Decimal?  @db.Decimal(5, 2)
+  weight                 Decimal?  @db.Decimal(5, 2)
+  fatPercentage          Decimal?  @db.Decimal(5, 2)
+  address                String?   @db.Text
+  emergencyContact       String?
+  heartCondition         Boolean   @default(false)
+  chestPainActivity      Boolean   @default(false)
+  chestPainRest          Boolean   @default(false)
+  dizzinessBalance       Boolean   @default(false)
+  boneJointProblem       Boolean   @default(false)
+  pregnant               Boolean   @default(false)
+  recentSurgery          Boolean   @default(false)
+  takingMedication       Boolean   @default(false)
+  medicationDetails      String?   @db.Text
+  smoking                Boolean   @default(false)
+  smokingAmount          String?
+  alcohol                Boolean   @default(false)
+  alcoholGlassesPerWeek  Int?
+  sleepHours             Int?
+  jobType                String?
+  jobRequiresTravel      Boolean   @default(false)
+  stressLevel            Int?
+  familyOverweight       String?   @db.Text
+  overweightAsChild      Boolean   @default(false)
+  overweightAges         String?
+  bestShapePeriod        String?   @db.Text
+  exercisingConsistently Boolean   @default(false)
+  currentFitnessLevel    Int?
+  mealsPerDay            Int?
+  skipMeals              Boolean   @default(false)
+  eatBreakfast           Boolean   @default(true)
+  eatLateNight           String?
+  energyDrops            Boolean   @default(false)
+  energyDropTime         String?
+  takingSupplements      Boolean   @default(false)
+  supplementsList        String?   @db.Text
+  mealLocation           String?
+  eatOutsidePerWeek      Int?
+  eatingReasons          String?   @db.Text
+  eatPastFullness        String?
+  highSugarFoods         String?
+  goalLoseFat            Boolean   @default(false)
+  goalRehabilitate       Boolean   @default(false)
+  goalSportsTraining     Boolean   @default(false)
+  goalMuscleGain         Boolean   @default(false)
+  goalOther              String?   @db.Text
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+  user                   User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
 model BlogPost {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   title       String
-  slug        String   @unique
-  content     String   @db.LongText
-  excerpt     String?  @db.Text
+  slug        String    @unique
+  content     String    @db.LongText
+  excerpt     String?   @db.Text
   coverImage  String?
-  videoUrl    String?  // YouTube video URL
   authorId    Int
-  published   Boolean  @default(false)
+  published   Boolean   @default(false)
   publishedAt DateTime?
-  readTime    Int?     // Reading time in minutes
-  views       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
-  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  readTime    Int?
+  views       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  videoUrl    String?
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   @@index([authorId])
   @@index([slug])
@@ -273,7 +236,7 @@ model BlogPost {
 
 model Notification {
   id        Int      @id @default(autoincrement())
-  coachId   Int      // Coach who created the notification
+  coachId   Int
   message   String   @db.Text
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
@@ -287,14 +250,14 @@ model PushSubscription {
   id           Int      @id @default(autoincrement())
   userId       Int
   endpoint     String   @db.Text
-  endpointHash String   @db.VarChar(64) // Hash of endpoint for unique constraint
+  endpointHash String   @db.VarChar(64)
   p256dh       String   @db.Text
   auth         String   @db.Text
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  @@index([userId])
   @@unique([userId, endpointHash])
+  @@index([userId])
 }
 
 model ContactSubmission {
@@ -304,7 +267,7 @@ model ContactSubmission {
   phone     String?
   subject   String
   message   String   @db.Text
-  status    String   @default("new") // "new", "read", "replied", "closed"
+  status    String   @default("new")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -317,16 +280,16 @@ model Feedback {
   id             Int      @id @default(autoincrement())
   name           String
   email          String
-  location       String   // City, State/Country
+  location       String
   phone          String?
-  rating         Int      // 1-5 stars
+  rating         Int
   review         String   @db.Text
-  transformation String?  // Brief description of their transformation
-  profilePhoto   String?  // URL to profile selfie
-  beforePhoto    String?  // URL to before transformation photo
-  afterPhoto     String?  // URL to after transformation photo
-  isApproved     Boolean  @default(false) // Coach can approve before showing on website
-  isVisible      Boolean  @default(false) // Toggle visibility on testimonials section
+  transformation String?
+  profilePhoto   String?
+  beforePhoto    String?
+  afterPhoto     String?
+  isApproved     Boolean  @default(false)
+  isVisible      Boolean  @default(false)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 

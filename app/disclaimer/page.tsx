@@ -2,14 +2,16 @@
 
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import AnnouncementBar from '@/components/AnnouncementBar';
 import { AlertTriangle } from 'lucide-react';
 
 export default function Disclaimer() {
   return (
     <div className="min-h-screen bg-brand-navy">
+      <AnnouncementBar />
       <Navbar />
 
-      <div className="pt-24 pb-16 px-4 md:px-6">
+      <div className="pt-32 pb-16 px-4 md:px-6">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">

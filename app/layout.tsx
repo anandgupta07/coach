@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { CartProvider } from '@/contexts/CartContext';
 import PWAInstallPrompt from '@/components/PWAInstallPrompt';
+import WhatsAppButton from '@/components/WhatsAppButton';
 import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -70,7 +71,7 @@ export const metadata: Metadata = {
     title: 'Coach Himanshu | NASM Certified Online Fitness Coach',
     description: 'Transform your fitness with personalized coaching. 1000+ transformations. Start at ₹799/month.',
     images: ['/og-image.jpg'],
-    creator: '@coachhimanshu',
+    creator: '@coach_himanshu_',
   },
   robots: {
     index: true,
@@ -119,6 +120,7 @@ export default function RootLayout({
         <CartProvider>
           {children}
           <PWAInstallPrompt />
+          <WhatsAppButton />
         </CartProvider>
 
         {/* Service Worker Registration */}
